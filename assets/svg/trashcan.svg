@@ -1,0 +1,8 @@
+<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <rect x="10" y="16" width="12" height="12" fill="#aaa" />
+  <!-- Lid -->
+  <rect x="8" y="14" width="16" height="4" fill="#666" />
+  <!-- Handle -->
+  <rect x="14" y="12" width="4" height="2" fill="#444" />
+</svg> 

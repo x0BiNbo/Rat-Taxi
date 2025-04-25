@@ -1,0 +1,9 @@
+<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <rect x="4" y="16" width="24" height="8" fill="#1976d2" />
+  <!-- Roof -->
+  <rect x="10" y="12" width="12" height="6" fill="#fff" />
+  <!-- Wheels -->
+  <ellipse cx="10" cy="26" rx="3" ry="2" fill="#222" />
+  <ellipse cx="22" cy="26" rx="3" ry="2" fill="#222" />
+</svg> 

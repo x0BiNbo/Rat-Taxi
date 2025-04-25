@@ -1,0 +1,7 @@
+<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trunk -->
+  <rect x="14" y="20" width="4" height="8" fill="#8b5c2a" />
+  <!-- Leaves -->
+  <ellipse cx="16" cy="16" rx="12" ry="10" fill="#3cb371" />
+  <ellipse cx="16" cy="12" rx="8" ry="6" fill="#2e8b57" />
+</svg> 

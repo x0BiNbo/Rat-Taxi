@@ -1,0 +1,18 @@
+<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Road base -->
+  <rect width="32" height="32" fill="#444" />
+  <!-- Curb (top and right) -->
+  <rect x="0" y="0" width="32" height="4" fill="#bbb"/>
+  <rect x="28" y="0" width="4" height="32" fill="#bbb"/>
+  <!-- Vertical dashed line (right half) -->
+  <rect x="14" y="0" width="4" height="16" fill="#FFD700"/>
+  <rect x="14" y="0" width="4" height="4" fill="#444"/>
+  <rect x="14" y="8" width="4" height="4" fill="#444"/>
+  <!-- Horizontal dashed line (top half) -->
+  <rect x="16" y="14" width="16" height="4" fill="#FFD700"/>
+  <rect x="16" y="14" width="4" height="4" fill="#444"/>
+  <rect x="24" y="14" width="4" height="4" fill="#444"/>
+  <!-- Shadow -->
+  <rect x="4" y="4" width="24" height="4" fill="#555" opacity="0.3"/>
+  <rect x="24" y="4" width="4" height="24" fill="#555" opacity="0.3"/>
+</svg> 

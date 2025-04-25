@@ -1,0 +1,11 @@
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg">
+  <!-- Buildings (dark gray) -->
+  <rect x="0" y="0" width="640" height="480" fill="#333"/>
+  <!-- Sidewalks (medium gray) -->
+  <rect x="160" y="200" width="320" height="80" fill="#666"/>
+  <rect x="120" y="160" width="400" height="160" fill="#666"/>
+  <!-- Horizontal road -->
+  <rect x="200" y="240" width="240" height="40" fill="#bbb"/>
+  <!-- Vertical road -->
+  <rect x="280" y="80" width="80" height="320" fill="#bbb"/>
+</svg> 

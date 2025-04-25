@@ -1,0 +1,74 @@
+# Active Context
+
+## Current Work Focus
+- Core gameplay loop is now complete: player can move, pick up and complete fares, earn cheese, buy upgrades, use the subway, and experience a full game over and upgrade loop with persistent upgrades.
+- Game over state, score tracking, and roguelike upgrade system are now implemented, tested, and working as intended.
+- Game over screen displays score and cheese, allows spending cheese on upgrades, and restarts run with upgrades persisting.
+- All tests pass, confirming TDD compliance.
+
+## Recent Changes
+- Implemented game over state and UI.
+- Added score tracking and display on game over.
+- Added roguelike upgrade system: cheese can be spent on upgrades after game over, upgrades persist between runs.
+- Updated progress.md and other memory bank files to reflect new features.
+
+## Next Steps
+- Continue asset mapping for sidewalk and building tiles as new assets become available.
+- Additional polish and bug fixes.
+- Maintain TDD workflow and keep memory bank up to date.
+
+## Active Decisions and Considerations
+- All gameplay loops (currency, upgrades, fares, health, pickups, hazards, subway, game over, score) are test-verified and robust.
+- Memory bank is current and accurately reflects project state.
+
+**Current Focus:**  
+- City grid now features multiple vertical and horizontal roads, with intersections, for a more interesting and traversable map. Sidewalks and buildings fill the rest of the grid.
+- Building tiles now use a variety of retro/pixel-art SVGs for visual diversity, assigned statically per tile.
+- Environmental props (trees, benches, streetlights, trashcans, mailboxes, cones, cars, fire hydrants) are now placed and rendered on sidewalk tiles for added city life.
+- Player and subway stations always spawn on valid, accessible road tiles.
+- Player movement is now smooth and supports map wrapping (toroidal movement).
+- Subway menu logic fixed: player can select and move to any other station, menu closes after travel.
+- SVG rendering is now cached for performance; lag is reduced.
+- Subway and player icons are visually distinct and retro-styled.
+- Fare (pickup/drop-off) generation is constrained to road tiles only.
+- Cheese is now properly deducted when upgrades are purchased, fixing the progression loop.
+- All TDD tests now reflect real game logic and pass.
+- Ground tiles (grass, dirt) now fill non-road/building/sidewalk spaces, with contextual sidewalk placement along roads/buildings.
+- Health mechanic added: player has hearts, loses half a heart on non-road collision, UI displays hearts.
+- **Health pickups (cheese wedge) and hazards (pothole, puddle, rat) are now randomly placed on sidewalk/ground tiles.**
+- **New grass/dirt tile variants and new prop (fire hydrant) added for visual variety.**
+- **Multiple fares and special fares are now supported, with a fare selection menu and special fare bonuses.**
+- **Subway system now has a cooldown and simple animation/transition when traveling.**
+- **Game over state, score tracking, and roguelike upgrade system implemented. Player sees a game over screen with score and cheese, can spend cheese on upgrades, and restart with upgrades persisting between runs.**
+
+**Recent Changes:**  
+- Refactored city grid logic to generate multiple vertical and horizontal roads, with intersections, for a more interesting city layout.
+- Added multiple building SVGs and updated rendering logic to use static building variety per tile.
+- Added environmental prop SVGs and logic to place and render props on sidewalk tiles.
+- Improved building SVGs for better retro/pixel-art style and variety.
+- Player and subway station spawn logic ensures valid, accessible road tiles.
+- Player movement is now smooth and supports map wrapping.
+- Subway menu logic fixed: player can select and move to any other station, menu closes after travel.
+- SVG rendering is now cached for performance; lag is reduced.
+- Improved subway and player SVG icons for clarity and style.
+- City grid rendering now selects the correct SVG for each tile type.
+- Fixed upgrade purchase logic so cheese is deducted from the player when upgrades are bought.
+- Updated/implemented tests for cheese currency, upgrade purchase, player movement, subway travel, prop rendering, and UI rendering. Removed placeholder tests.
+- Test suite now fully passes, confirming TDD compliance.
+- Added contextual ground tile system (grass, dirt) and improved sidewalk placement.
+- Implemented health mechanic with heart icons and impact damage.
+- **Integrated health pickups and hazards into gameplay. Added new tile/prop variants.**
+- **Implemented multiple/special fares, fare selection menu, subway cooldown, and subway animation.**
+- **Implemented game over state, score tracking, and roguelike upgrade system. Game over screen now displays score and cheese, allows spending cheese on upgrades, and restarts run with upgrades persisting.**
+
+**Next Steps:**  
+- Continue polish and bug fixes.
+- Maintain TDD and memory bank updates after each milestone.
+- **Enhance fare and subway systems (multiple fares, special fares, subway cooldown/animation).**
+- **Polish and expand visual assets (tiles, props, buildings, UI).**
+
+**Active Decisions:**  
+- Use a multi-road layout for MVP and asset mapping.
+- Use SVG assets for all city grid tile types and props for flexibility and clarity.
+- TDD and memory bank updates after each milestone.
+- Ensure all gameplay loops (currency, upgrades, fares, health, pickups, hazards, subway, game over, score) are test-verified and robust. 
