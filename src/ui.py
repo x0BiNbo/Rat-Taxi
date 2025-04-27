@@ -11,21 +11,25 @@ def draw_minimap(surface, player_pos, city_size, stations, pickup, dropoff):
     for sx, sy in stations:
         x = int(sx * scale_x)
         y = int(sy * scale_y)
+        pygame.draw.circle(surface, (255, 255, 255), (x, y), 6)  # white outline
         pygame.draw.circle(surface, (100, 100, 255), (x, y), 5)
     # Draw fare pickup
     if pickup:
         x = int(pickup[0] * scale_x)
         y = int(pickup[1] * scale_y)
+        pygame.draw.circle(surface, (255, 255, 255), (x, y), 6)
         pygame.draw.circle(surface, (40, 220, 40), (x, y), 5)
     # Draw fare dropoff
     if dropoff:
         x = int(dropoff[0] * scale_x)
         y = int(dropoff[1] * scale_y)
-        pygame.draw.circle(surface, (220, 40, 40), (x, y), 5)
+        pygame.draw.circle(surface, (255, 255, 255), (x, y), 6)
+        pygame.draw.circle(surface, (255, 80, 80), (x, y), 5)
     # Draw player
     px, py = player_pos
     x = int(px * scale_x)
     y = int(py * scale_y)
+    pygame.draw.circle(surface, (255, 255, 255), (x, y), 7)
     pygame.draw.circle(surface, (255, 220, 40), (x, y), 6)
 
 def draw_fare_meter(surface, font, fare_active, fare_bonus, cheese):
@@ -98,4 +102,53 @@ def handle_upgrade_menu_mouse(mouse_pos, mouse_click, upgrade_options, base_y=70
         if rect.collidepoint(x, y):
             if mouse_click:
                 return i
-    return None 
+    return None
+
+def get_icon_surfaces_for_test():
+    import pygame
+    icons = []
+    # Player icon (pure white with black outline)
+    player_surface = pygame.Surface((32, 32), pygame.SRCALPHA)
+    pygame.draw.circle(player_surface, (0, 0, 0), (16, 16), 15)
+    pygame.draw.circle(player_surface, (255, 255, 255), (16, 16), 13)
+    icons.append((player_surface, (0, 0, 0)))
+    # Subway icon (cyan with white outline)
+    subway_surface = pygame.Surface((32, 32), pygame.SRCALPHA)
+    pygame.draw.circle(subway_surface, (255, 255, 255), (16, 16), 15)
+    pygame.draw.circle(subway_surface, (100, 255, 255), (16, 16), 13)
+    icons.append((subway_surface, (0, 0, 0)))
+    # Fare pickup icon (lime with white outline)
+    fare_pickup_surface = pygame.Surface((32, 32), pygame.SRCALPHA)
+    pygame.draw.circle(fare_pickup_surface, (255, 255, 255), (16, 16), 15)
+    pygame.draw.circle(fare_pickup_surface, (200, 255, 100), (16, 16), 13)
+    icons.append((fare_pickup_surface, (0, 0, 0)))
+    # Fare dropoff icon (red with white outline)
+    fare_dropoff_surface = pygame.Surface((32, 32), pygame.SRCALPHA)
+    pygame.draw.circle(fare_dropoff_surface, (255, 255, 255), (16, 16), 15)
+    pygame.draw.circle(fare_dropoff_surface, (255, 0, 0), (16, 16), 13)
+    icons.append((fare_dropoff_surface, (0, 0, 0)))
+    # Example prop icon (yellow with black outline)
+    prop_surface = pygame.Surface((32, 32), pygame.SRCALPHA)
+    pygame.draw.polygon(prop_surface, (0, 0, 0), [(16, 2), (30, 30), (2, 30)])
+    pygame.draw.polygon(prop_surface, (255, 255, 0), [(16, 4), (28, 28), (4, 28)])
+    icons.append((prop_surface, (0, 0, 0)))
+    return icons
+
+def draw_player_with_feedback(surface, feedback=None):
+    # Draw the normal player icon (yellow with white outline)
+    surface.fill((0, 0, 0, 0))
+    pygame.draw.circle(surface, (255, 255, 255), (32, 32), 30)
+    pygame.draw.circle(surface, (255, 220, 40), (32, 32), 28)
+    # Overlay for feedback
+    if feedback == 'pickup':
+        overlay = pygame.Surface((64, 64), pygame.SRCALPHA)
+        overlay.fill((40, 255, 40, 120))  # green, semi-transparent
+        surface.blit(overlay, (0, 0))
+    elif feedback == 'hazard':
+        overlay = pygame.Surface((64, 64), pygame.SRCALPHA)
+        overlay.fill((255, 40, 40, 120))  # red, semi-transparent
+        surface.blit(overlay, (0, 0))
+    elif feedback == 'fare_complete':
+        overlay = pygame.Surface((64, 64), pygame.SRCALPHA)
+        overlay.fill((80, 160, 255, 120))  # blue, semi-transparent
+        surface.blit(overlay, (0, 0)) 

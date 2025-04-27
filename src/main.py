@@ -150,38 +150,53 @@ def main():
                 running = False
             elif event.type == pygame.KEYDOWN:
                 if game_over:
-                    if event.key == pygame.K_RETURN:
-                        # Spend cheese on upgrades before restart
-                        upgrades.cheese += cheese
-                        cheese = 0
-                        health = max_health
-                        score = 0
-                        spent_cheese = 0
-                        # Reset city, fares, pickups, hazards, player
-                        city = City()
-                        grid = city.get_grid()
-                        player = Player(city_width=city.width, city_height=city.height, spawn_pos=spawn_pos)
-                        fare_manager = FareManager(city_width=city.width, city_height=city.height, city_grid=city.get_grid(), max_fares=3)
-                        # Re-generate props, hazards, pickups
-                        prop_layer = [[None for _ in range(city.width)] for _ in range(city.height)]
-                        hazard_layer = [[None for _ in range(city.width)] for _ in range(city.height)]
-                        pickup_layer = [[None for _ in range(city.width)] for _ in range(city.height)]
-                        road_tiles = [(x, y) for y, row in enumerate(grid) for x, tile in enumerate(row) if tile in (0, 1, 2, 5, 6, 7, 8)]
-                        used_tiles = set()
-                        for y, row in enumerate(grid):
-                            for x, tile in enumerate(row):
-                                if tile == 3 and random.random() < 0.08:
-                                    prop_layer[y][x] = random.choice(prop_svgs)
-                        random.shuffle(road_tiles)
-                        for rx, ry in road_tiles:
-                            if (rx, ry) not in used_tiles and random.random() < 0.03:
-                                hazard_layer[ry][rx] = random.choice(hazard_svgs)
-                                used_tiles.add((rx, ry))
-                        for rx, ry in road_tiles:
-                            if (rx, ry) not in used_tiles and random.random() < 0.01:
-                                pickup_layer[ry][rx] = 'assets/svg/cheese_pickup.svg'
-                                used_tiles.add((rx, ry))
-                        game_over = False
+                    if event.key == pygame.K_UP:
+                        selected_upgrade = (selected_upgrade - 1) % len(upgrade_options)
+                    elif event.key == pygame.K_DOWN:
+                        selected_upgrade = (selected_upgrade + 1) % len(upgrade_options)
+                    elif event.key == pygame.K_RETURN:
+                        # Spend cheese on upgrades before restart if enough cheese
+                        if upgrades.cheese >= 5:
+                            if upgrades.purchase_upgrade(upgrade_options[selected_upgrade]):
+                                setattr(player, f'{upgrade_options[selected_upgrade]}_level', getattr(player, f'{upgrade_options[selected_upgrade]}_level') + 1)
+                                cheese = upgrades.cheese
+                        else:
+                            # If not enough cheese, treat as restart
+                            upgrades.cheese += cheese
+                            cheese = 0
+                            health = max_health
+                            score = 0
+                            spent_cheese = 0
+                            # Reset city, fares, pickups, hazards, player
+                            city = City()
+                            grid = city.get_grid()
+                            player = Player(city_width=city.width, city_height=city.height, spawn_pos=spawn_pos)
+                            # Set player upgrade levels from UpgradeManager
+                            player.engine_level = upgrades.engine_level
+                            player.tires_level = upgrades.tires_level
+                            player.seats_level = upgrades.seats_level
+                            player.fare_level = upgrades.fare_level
+                            fare_manager = FareManager(city_width=city.width, city_height=city.height, city_grid=city.get_grid(), max_fares=3)
+                            # Re-generate props, hazards, pickups
+                            prop_layer = [[None for _ in range(city.width)] for _ in range(city.height)]
+                            hazard_layer = [[None for _ in range(city.width)] for _ in range(city.height)]
+                            pickup_layer = [[None for _ in range(city.width)] for _ in range(city.height)]
+                            road_tiles = [(x, y) for y, row in enumerate(grid) for x, tile in enumerate(row) if tile in (0, 1, 2, 5, 6, 7, 8)]
+                            used_tiles = set()
+                            for y, row in enumerate(grid):
+                                for x, tile in enumerate(row):
+                                    if tile == 3 and random.random() < 0.08:
+                                        prop_layer[y][x] = random.choice(prop_svgs)
+                            random.shuffle(road_tiles)
+                            for rx, ry in road_tiles:
+                                if (rx, ry) not in used_tiles and random.random() < 0.03:
+                                    hazard_layer[ry][rx] = random.choice(hazard_svgs)
+                                    used_tiles.add((rx, ry))
+                            for rx, ry in road_tiles:
+                                if (rx, ry) not in used_tiles and random.random() < 0.01:
+                                    pickup_layer[ry][rx] = 'assets/svg/cheese_pickup.svg'
+                                    used_tiles.add((rx, ry))
+                            game_over = False
                 elif show_upgrade_menu:
                     if event.key == pygame.K_UP:
                         selected_upgrade = (selected_upgrade - 1) % len(upgrade_options)
@@ -227,30 +242,42 @@ def main():
 
         upgrades.cheese = cheese
 
+        # Trigger roguelike game over if health is depleted
+        if health <= 0 and not game_over:
+            game_over = True
+
         if game_over:
             screen.fill((20, 10, 30))
+            # Left panel: game over info
+            left_x = 60
+            y0 = 80
+            spacing = 48
             over_text = font.render('GAME OVER', True, (255, 80, 80))
+            screen.blit(over_text, (left_x, y0))
             score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+            screen.blit(score_text, (left_x, y0 + spacing))
             cheese_text = font.render(f'Cheese: {cheese}', True, (255, 255, 200))
-            restart_text = font.render('Press Enter to spend cheese and restart', True, (180, 180, 255))
-            screen.blit(over_text, (300, 180))
-            screen.blit(score_text, (320, 240))
-            screen.blit(cheese_text, (320, 280))
-            screen.blit(restart_text, (180, 340))
-            # Draw upgrade menu for spending cheese
-            menu_bg = pygame.Surface((320, 240))
+            screen.blit(cheese_text, (left_x, y0 + 2 * spacing))
+            restart_text = font.render('Enter: Spend cheese on upgrade OR restart', True, (180, 180, 255))
+            screen.blit(restart_text, (left_x, y0 + 3 * spacing))
+            # Right panel: upgrade menu
+            menu_x = 420
+            menu_y = 80
+            menu_w = 320
+            menu_h = 260
+            menu_bg = pygame.Surface((menu_w, menu_h))
             menu_bg.set_alpha(220)
             menu_bg.fill((40, 40, 60))
-            screen.blit(menu_bg, (240, 120))
+            screen.blit(menu_bg, (menu_x, menu_y))
             title = font.render('Upgrade Menu', True, (255, 255, 255))
-            screen.blit(title, (320, 140))
+            screen.blit(title, (menu_x + menu_w // 2 - title.get_width() // 2, menu_y + 20))
             for i, opt in enumerate(upgrade_options):
                 color = (255, 255, 0) if i == selected_upgrade else (200, 200, 200)
                 level = getattr(upgrades, f'{opt}_level')
                 label = font.render(f'{opt.title()} (Lv {level}) - 5 Cheese', True, color)
-                screen.blit(label, (260, 180 + i * 40))
+                screen.blit(label, (menu_x + 30, menu_y + 70 + i * 40))
             cheese_label = font.render(f'Cheese: {upgrades.cheese}', True, (255, 255, 200))
-            screen.blit(cheese_label, (320, 340))
+            screen.blit(cheese_label, (menu_x + menu_w // 2 - cheese_label.get_width() // 2, menu_y + menu_h - 40))
             pygame.display.flip()
             clock.tick(10)
             continue
@@ -402,7 +429,7 @@ def main():
                 fx, fy = fare.pickup
                 pickup_rect = pygame.Rect(fx * tile_size + 8, fy * tile_size + 8, tile_size - 16, tile_size - 16)
                 pickup_surface = pygame.Surface((pickup_rect.width, pickup_rect.height), pygame.SRCALPHA)
-                load_and_render_svg('assets/svg/customer.svg', pickup_surface)
+                load_and_render_svg('assets/svg/fare_pickup.svg', pickup_surface)
                 screen.blit(pickup_surface, pickup_rect.topleft)
                 pickup_pos = fare.pickup
                 dropoff_pos = None
@@ -410,7 +437,7 @@ def main():
                 fx, fy = fare.dropoff
                 dropoff_rect = pygame.Rect(fx * tile_size + 8, fy * tile_size + 8, tile_size - 16, tile_size - 16)
                 dropoff_surface = pygame.Surface((dropoff_rect.width, dropoff_rect.height), pygame.SRCALPHA)
-                load_and_render_svg('assets/svg/prop.svg', dropoff_surface)
+                load_and_render_svg('assets/svg/fare_dropoff.svg', dropoff_surface)
                 screen.blit(dropoff_surface, dropoff_rect.topleft)
                 pickup_pos = None
                 dropoff_pos = fare.dropoff
@@ -498,18 +525,24 @@ def main():
         heart_y = 40
         hearts = health // 2
         half = health % 2
+        hearts_per_row = 10
+        heart_rows = (max_health // 2 + hearts_per_row - 1) // hearts_per_row
         for i in range(max_health // 2):
+            row = i // hearts_per_row
+            col = i % hearts_per_row
+            x = heart_x + col * 32
+            y = heart_y + row * 32
             if i < hearts:
                 heart_icon = get_svg_surface(heart_svgs[0], 28)
             elif i == hearts and half:
                 heart_icon = get_svg_surface(heart_svgs[1], 28)
             else:
                 heart_icon = get_svg_surface(heart_svgs[2], 28)
-            screen.blit(heart_icon, (heart_x + i * 32, heart_y))
-
-        # Draw score at top left below cheese
+            screen.blit(heart_icon, (x, y))
+        # Draw score below the last row of hearts
         score_text = font.render(f'Score: {score}', True, (200, 255, 255))
-        screen.blit(score_text, (10, 30))
+        score_y = heart_y + heart_rows * 32 + 4
+        screen.blit(score_text, (10, score_y))
 
         pygame.display.flip()
         clock.tick(10)

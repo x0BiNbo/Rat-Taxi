@@ -5,17 +5,39 @@
 - Game over state, score tracking, and roguelike upgrade system are now implemented, tested, and working as intended.
 - Game over screen displays score and cheese, allows spending cheese on upgrades, and restarts run with upgrades persisting.
 - All tests pass, confirming TDD compliance.
+- Implementing a prioritized, test-driven plan for gameplay and UI/UX improvements, including:
+  1. Icon contrast (accessibility, now improved and tested with WCAG 4.5:1 ratio, outlines, and lighter tints)
+  2. Minimap clarity (now improved: all markers have outlines and accessible colors, and pass the WCAG 4.5:1 contrast ratio test)
+  3. Player feedback (visual/audio, now visually clear: player icon flashes green for pickups, red for hazards, blue for fare completion; tested and passes TDD)
+  4. UI layout polish (multi-resolution)
+  5. Accessibility enhancements (colorblind, font scaling)
+  6. Upgrade persistence bug fixed: upgrades purchased in the upgrade menu now persist and affect gameplay after a reset. The fix sets the new Player's upgrade levels from the persistent UpgradeManager on reset. This is now tested and verified in-game.
+- All improvements will follow TDD: failing tests first, then minimal code to pass, then documentation.
 
 ## Recent Changes
 - Implemented game over state and UI.
 - Added score tracking and display on game over.
 - Added roguelike upgrade system: cheese can be spent on upgrades after game over, upgrades persist between runs.
 - Updated progress.md and other memory bank files to reflect new features.
+- **Standardized all core/corner road and sidewalk SVGs to 40x40 pixels, fixing grid seams and alignment issues.**
+- **Tested updated SVGs in-game; grid and tile seams are resolved, and all tiles align perfectly.**
+- Plan for UI/UX and gameplay improvements approved and documented.
+- Memory Bank updated to reflect new improvement cycle.
 
 ## Next Steps
 - Continue asset mapping for sidewalk and building tiles as new assets become available.
 - Additional polish and bug fixes.
 - Maintain TDD workflow and keep memory bank up to date.
+- **Focus on UI/UX and gameplay improvements: icon contrast, mini-map clarity, player feedback, new mechanics.**
+- Write failing tests for each improvement area.
+- Implement minimal code to pass tests, one area at a time.
+- Run and verify tests after each change.
+- Update documentation and .cursorrules as needed.
+
+## Rationale
+- Improvements are based on best practices for retro/sim games, accessibility, and user feedback.
+- TDD ensures all changes are robust and verifiable.
+- Memory Bank and documentation are kept current for agentic AI handoff and future development.
 
 ## Active Decisions and Considerations
 - All gameplay loops (currency, upgrades, fares, health, pickups, hazards, subway, game over, score) are test-verified and robust.
@@ -60,6 +82,10 @@
 - **Integrated health pickups and hazards into gameplay. Added new tile/prop variants.**
 - **Implemented multiple/special fares, fare selection menu, subway cooldown, and subway animation.**
 - **Implemented game over state, score tracking, and roguelike upgrade system. Game over screen now displays score and cheese, allows spending cheese on upgrades, and restarts run with upgrades persisting.**
+- Game over UI now has a left-aligned info panel and a right-aligned upgrade menu panel, with clear spacing and no overlap.
+- Upgrade menu navigation (up/down/enter) is always active during game over, allowing cheese spending and upgrade persistence.
+- Tests added for upgrade menu navigation and persistence during game over.
+- The score is now always drawn below the last row of hearts, regardless of health value, preventing overlap. A test was added to verify this UI behavior.
 
 **Next Steps:**  
 - Continue polish and bug fixes.
@@ -71,4 +97,26 @@
 - Use a multi-road layout for MVP and asset mapping.
 - Use SVG assets for all city grid tile types and props for flexibility and clarity.
 - TDD and memory bank updates after each milestone.
-- Ensure all gameplay loops (currency, upgrades, fares, health, pickups, hazards, subway, game over, score) are test-verified and robust. 
+- Ensure all gameplay loops (currency, upgrades, fares, health, pickups, hazards, subway, game over, score) are test-verified and robust.
+- Added a new test (test_city_tile_asset_mapping) to verify that all city grid tile types (sidewalk and building variants) are mapped to the correct SVG asset and render without error. This ensures asset mapping robustness and further strengthens TDD compliance for the visual pipeline.
+- Health UI now wraps hearts to new rows to prevent overlap, ensuring clarity for all health values.
+- Roguelike game over is now triggered on health depletion, allowing the player to spend cheese on upgrades and restart with persistent upgrades.
+- New SVGs for fare pickup and dropoff are created and integrated for better visibility and clarity.
+- Tests added/updated for health UI wrapping, game over on health depletion, and SVG asset loading for new fare icons.
+
+## Prioritized Next Steps for UI/UX and Gameplay Improvements
+1. **Improve Icon Contrast**
+   - Test: All icons (stars, cones, etc.) pass accessibility contrast checks and are clearly visible on all backgrounds.
+2. **Refine Mini-Map Visuals**
+   - Test: Mini-map is readable at all times, with clear player, fare, and station indicators.
+3. **Enhance Player Feedback**
+   - Test: Player receives clear visual/audio feedback for pickups, hazards, and fare completion.
+4. **Add/Refine Gameplay Mechanics**
+   - Test: New mechanics (e.g., special fares, hazards) are test-verified for correct integration and player experience.
+5. **Polish UI Layout and Clarity**
+   - Test: All UI elements (score, hearts, fare meter, upgrade menu) are non-overlapping, readable, and visually consistent at all resolutions.
+
+- Icon contrast improvements implemented: all major icons now have outlines and lighter tints, and pass the WCAG 4.5:1 contrast ratio test for accessibility.
+- Minimap clarity and accessibility improved: all markers now have outlines and accessible colors, and pass the WCAG 4.5:1 contrast ratio test.
+- Player feedback is now visually clear: player icon flashes green for pickups, red for hazards, and blue for fare completion. This is tested and passes TDD.
+- Upgrade persistence bug fixed: upgrades purchased in the upgrade menu now persist and affect gameplay after a reset. The fix sets the new Player's upgrade levels from the persistent UpgradeManager on reset. This is now tested and verified in-game. 

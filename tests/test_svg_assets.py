@@ -86,4 +86,44 @@ def test_svg_asset_scaling(surface):
     big_surface = pygame.Surface((64, 64))
     load_and_render_svg(svg_path, big_surface)
     arr = pygame.surfarray.array3d(big_surface)
-    assert arr.sum() > 0, 'SVG did not scale and render at larger size.' 
+    assert arr.sum() > 0, 'SVG did not scale and render at larger size.'
+
+def test_city_tile_asset_mapping(surface):
+    """
+    For each city grid tile type (sidewalk and building variants), ensure the correct SVG asset is mapped and renders without error.
+    """
+    from src.ui import load_and_render_svg
+    tile_asset_map = {
+        3: [
+            'assets/svg/sidewalk.svg',
+            'assets/svg/sidewalk_t.svg',
+            'assets/svg/sidewalk_corner.svg',
+            'assets/svg/sidewalk_straight.svg',
+            'assets/svg/sidewalk_end.svg',
+        ],
+        4: ['assets/svg/building.svg'],
+        41: ['assets/svg/building1.svg'],
+        42: ['assets/svg/building2.svg'],
+    }
+    for tile_type, asset_list in tile_asset_map.items():
+        for asset in asset_list:
+            try:
+                load_and_render_svg(asset, surface)
+                arr = pygame.surfarray.array3d(surface)
+                assert arr.sum() > 0, f'Asset {asset} for tile type {tile_type} did not render any content.'
+            except Exception as e:
+                assert False, f'Error rendering asset {asset} for tile type {tile_type}: {e}'
+
+def test_load_and_render_fare_pickup_svg(surface):
+    from src.ui import load_and_render_svg
+    svg_path = Path('assets/svg/fare_pickup.svg')
+    load_and_render_svg(svg_path, surface)
+    arr = pygame.surfarray.array3d(surface)
+    assert arr.sum() > 0, 'Fare pickup SVG did not render any content.'
+
+def test_load_and_render_fare_dropoff_svg(surface):
+    from src.ui import load_and_render_svg
+    svg_path = Path('assets/svg/fare_dropoff.svg')
+    load_and_render_svg(svg_path, surface)
+    arr = pygame.surfarray.array3d(surface)
+    assert arr.sum() > 0, 'Fare dropoff SVG did not render any content.' 

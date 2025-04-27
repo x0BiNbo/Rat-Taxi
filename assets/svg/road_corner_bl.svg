@@ -1,18 +1,18 @@
-<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
   <!-- Road base -->
-  <rect width="32" height="32" fill="#444" />
+  <rect width="40" height="40" fill="#444" />
   <!-- Curb (bottom and left) -->
-  <rect x="0" y="28" width="32" height="4" fill="#bbb"/>
-  <rect x="0" y="0" width="4" height="32" fill="#bbb"/>
-  <!-- Vertical dashed line (left half) -->
-  <rect x="14" y="16" width="4" height="16" fill="#FFD700"/>
-  <rect x="14" y="16" width="4" height="4" fill="#444"/>
-  <rect x="14" y="24" width="4" height="4" fill="#444"/>
-  <!-- Horizontal dashed line (bottom half) -->
-  <rect x="0" y="14" width="16" height="4" fill="#FFD700"/>
-  <rect x="0" y="14" width="4" height="4" fill="#444"/>
-  <rect x="8" y="14" width="4" height="4" fill="#444"/>
+  <rect x="0" y="38" width="40" height="2" fill="#bbb"/>
+  <rect x="0" y="0" width="2" height="40" fill="#bbb"/>
+  <!-- Vertical dashed line (left) -->
+  <rect x="18" y="18" width="4" height="22" fill="#FFD700"/>
+  <rect x="18" y="18" width="4" height="5" fill="#444"/>
+  <rect x="18" y="28" width="4" height="5" fill="#444"/>
+  <!-- Horizontal dashed line (bottom) -->
+  <rect x="0" y="18" width="22" height="4" fill="#FFD700"/>
+  <rect x="0" y="18" width="5" height="4" fill="#444"/>
+  <rect x="10" y="18" width="5" height="4" fill="#444"/>
   <!-- Shadow -->
-  <rect x="4" y="24" width="24" height="4" fill="#555" opacity="0.3"/>
-  <rect x="4" y="4" width="4" height="24" fill="#555" opacity="0.3"/>
+  <rect x="2" y="28" width="36" height="2" fill="#555" opacity="0.3"/>
+  <rect x="2" y="2" width="2" height="36" fill="#555" opacity="0.3"/>
 </svg> 

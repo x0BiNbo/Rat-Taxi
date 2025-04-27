@@ -1,15 +1,15 @@
-<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" fill="#444" />
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <rect width="40" height="40" fill="#444" />
   <!-- Vertical dashed line -->
-  <rect x="14" y="0" width="4" height="32" fill="#FFD700"/>
-  <rect x="14" y="0" width="4" height="4" fill="#444"/>
-  <rect x="14" y="8" width="4" height="4" fill="#444"/>
-  <rect x="14" y="16" width="4" height="4" fill="#444"/>
-  <rect x="14" y="24" width="4" height="4" fill="#444"/>
+  <rect x="18" y="0" width="4" height="40" fill="#FFD700"/>
+  <rect x="18" y="0" width="4" height="5" fill="#444"/>
+  <rect x="18" y="10" width="4" height="5" fill="#444"/>
+  <rect x="18" y="20" width="4" height="5" fill="#444"/>
+  <rect x="18" y="30" width="4" height="5" fill="#444"/>
   <!-- Horizontal dashed line -->
-  <rect x="0" y="14" width="32" height="4" fill="#FFD700"/>
-  <rect x="0" y="14" width="4" height="4" fill="#444"/>
-  <rect x="8" y="14" width="4" height="4" fill="#444"/>
-  <rect x="16" y="14" width="4" height="4" fill="#444"/>
-  <rect x="24" y="14" width="4" height="4" fill="#444"/>
+  <rect x="0" y="18" width="40" height="4" fill="#FFD700"/>
+  <rect x="0" y="18" width="5" height="4" fill="#444"/>
+  <rect x="10" y="18" width="5" height="4" fill="#444"/>
+  <rect x="20" y="18" width="5" height="4" fill="#444"/>
+  <rect x="30" y="18" width="5" height="4" fill="#444"/>
 </svg> 
